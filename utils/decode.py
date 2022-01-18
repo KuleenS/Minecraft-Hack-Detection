@@ -1,15 +1,15 @@
-def read_var_int(b:bytes) -> tuple[int, bytes]:
-    value = 0
-    length = 0
-    while True:
-        currentByte = b[length]
-        value |= (currentByte & 0x7F) << (length * 7)
-        length += 1
-        if ((value & 0x80) != 0x80):
-            break
-    return value, b[length:]
+import io
+import struct
 
-
-
-
-
+def read_var_int(buff: bytes) ->tuple[int, bytes]: 
+    buff = io.BytesIO(buff)
+    total = 0
+    shift = 0
+    val = 0x80
+    while val&0x80:
+        val = struct.unpack('>B', buff.read(1))[0]
+        total |= ((val&0x7F)<<shift)
+        shift += 7
+    if total&(1<<31):
+        total = total - (1<<32)
+    return total, buff.read()
