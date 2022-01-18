@@ -14,7 +14,7 @@ class EntityVelocityPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
-        x,y,z = struct.unpack('>bbb', b)
+        x,y,z = struct.unpack('>hhh', b)
         self.velocity_x = x/8000.0
         self.velocity_y = y/8000.0
         self.velocity_z = z/8000.0
