@@ -1,6 +1,5 @@
 from abc import ABC
-import struct
-from utils.functions import read_var_int
+
 class Packet(ABC):
     def __init__(self, timestamp: int, length: int, byte_array, id=None):
         self.timestamp = timestamp

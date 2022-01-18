@@ -1,7 +1,7 @@
 import json
 import struct
 import argparse
-from utils.functions import classify_packet
+from utils.classify import classify_packet
 from os.path import exists
 
 
@@ -28,7 +28,7 @@ def main(args):
     packets = []
     if not exists(args.file):
         raise ValueError('File does not exist')
-    elif args.files.split('.')[-1]!="tmpcr":
+    elif args.file.split('.')[-1]!="tmcpr":
         raise ValueError('File is in wrong format')
     with open(args.file, "rb") as f:
         while timestamp := f.read(4):

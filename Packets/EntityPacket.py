@@ -1,9 +1,9 @@
-from Packet import Packet
-from utils.functions import read_var_int
+from Packets.Packet import Packet
+from utils.decode import read_var_int
 
 class EntityPacket(Packet):
     def __init__(self, timestamp: int, length: int, byte_array, id:int):
-        super().__init__(self, timestamp, length, byte_array, id)
+        super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
 
     @classmethod

@@ -1,17 +1,5 @@
 import Packets
-
-def read_var_int(b:bytes) -> tuple[int, bytes]:
-    value = 0
-    length = 0
-    while True:
-        currentByte = b[length]
-        value |= (currentByte & 0x7F) << (length * 7)
-        length += 1
-        if ((value & 0x80) != 0x80):
-            break
-    return value, b[length:]
-
-def classify_packet(timestamp: int, length: int, byte_array:bytes, id:int) -> Packets.Packet:
+def classify_packet(timestamp: int, length: int, byte_array:bytes, id:int):
     """0x0C Spawn Player 12
     0x12 Entity Velocity 18
     0x14 Entity 20
@@ -45,4 +33,3 @@ def classify_packet(timestamp: int, length: int, byte_array:bytes, id:int) -> Pa
     else:
         packet = None
     return packet
-

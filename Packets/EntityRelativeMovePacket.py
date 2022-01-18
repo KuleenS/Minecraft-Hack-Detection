@@ -1,10 +1,10 @@
 import struct
-from Packet import Packet
-from utils.functions import read_var_int
+from Packets.Packet import Packet
+from utils.decode import read_var_int
 
 class EntityRelativeMovePacket(Packet):
     def __init__(self, timestamp: int, length: int, byte_array, id:int):
-        super().__init__(self, timestamp, length, byte_array, id)
+        super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
         self.delta_x = None
         self.delta_y = None
