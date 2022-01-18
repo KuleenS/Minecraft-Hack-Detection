@@ -1,31 +1,9 @@
-import json
 import struct
 import argparse
 from utils.classify import classify_packet
 from os.path import exists
-import Packets
-
 
 def main(args):
-    # read the protocol for 1.8
-    # Protocol 47
-    # JSON from https://github.com/PrismarineJS/minecraft-data/blob/master/data/pc/1.8/protocol.json
-    protocol = json.load(open('./data/protocol.json', 'r'))
-
-    # creates a mapping between id numbers and names of packets
-    packet_json = protocol['play']['toClient']['types']
-    # gets the mappings from the protocol
-    packet_types = packet_json['packet'][1][0]['type'][1]['mappings']
-
-    # adds packet_ in front of it to work with the keys of packet_json
-    packet_types_values = ["packet_"+x for x in list(packet_types.values())]
-
-    # converts the hex string ids to numbers
-    packet_types_keys = [int(x, 16) for x in list(packet_types.keys())]
-
-    # creates a dictionary of them
-    packet_types = dict(zip(packet_types_keys, packet_types_values))
-
     packets = []
     if not exists(args.file):
         raise ValueError('File does not exist')
