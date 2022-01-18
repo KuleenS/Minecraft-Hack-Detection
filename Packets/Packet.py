@@ -10,6 +10,5 @@ class Packet(ABC):
     def __repr__(self) -> str:
         return f'Packet with id {self.id} starting at {self.timestamp} with a byte_array {self.byte_array} of length {self.length}'
 
-    @classmethod
     def decode(self):
         pass

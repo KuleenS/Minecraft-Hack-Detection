@@ -3,7 +3,7 @@ import struct
 import argparse
 from utils.classify import classify_packet
 from os.path import exists
-
+import Packets
 
 def main(args):
     #read the protocol for 1.8
@@ -39,6 +39,8 @@ def main(args):
             byte_array = byte_array[1:]
             length-=1
             packets.append(classify_packet(timestamp, length, byte_array, id))
+    packets = [x for x in packets if x is not None]
+    packets[0].decode()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Extract position data from 1.8 mcpr files')

@@ -8,9 +8,8 @@ class EntityHeadLookPacket(Packet):
         self.entity_id = None
         self.head_yaw = None
 
-    @classmethod
-    def decode(cls):
-        eid, b = read_var_int(cls.byte_array)
-        cls.entity_id = eid
+    def decode(self):
+        eid, b = read_var_int(self.byte_array)
+        self.entity_id = eid
         head_yaw = struct.unpack('b', b)
-        cls.head_yaw = head_yaw/256.0
+        self.head_yaw = head_yaw/256.0

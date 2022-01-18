@@ -4,6 +4,5 @@ class EntityMetadataPacket(Packet):
     def __init__(self, timestamp: int, length: int, byte_array, id:int):
         super().__init__(timestamp, length, byte_array, id)
 
-    @classmethod
-    def decode(cls):
+    def decode(self):
         pass

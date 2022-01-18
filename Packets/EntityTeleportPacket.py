@@ -13,14 +13,13 @@ class EntityTeleportPacket(Packet):
         self.pitch = None
         self.on_ground = None
 
-    @classmethod
-    def decode(cls):
-        eid, b = read_var_int(cls.byte_array)
-        cls.entity_id = eid
+    def decode(self):
+        eid, b = read_var_int(self.byte_array)
+        self.entity_id = eid
         x, y, z, yaw, pitch, on_ground = struct.unpack('>i>i>ibb?', b)
-        cls.x = x
-        cls.y = y
-        cls.z = z
-        cls.yaw = yaw/256.0
-        cls.pitch = pitch/256.0
-        cls.on_ground = on_ground
+        self.x = x
+        self.y = y
+        self.z = z
+        self.yaw = yaw/256.0
+        self.pitch = pitch/256.0
+        self.on_ground = on_ground

@@ -8,9 +8,8 @@ class EntityStatusPacket(Packet):
         self.entity_id = None
         self.status = None
 
-    @classmethod
-    def decode(cls):
-        eid, b = read_var_int(cls.byte_array)
-        cls.entity_id = eid
+    def decode(self):
+        eid, b = read_var_int(self.byte_array)
+        self.entity_id = eid
         status = struct.unpack('b', b)
-        cls.status = status
+        self.status = status
