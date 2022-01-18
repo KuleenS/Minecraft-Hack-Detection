@@ -11,5 +11,5 @@ class EntityStatusPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
-        status = struct.unpack('b', b)
+        status = struct.unpack('>b', b)
         self.status = status

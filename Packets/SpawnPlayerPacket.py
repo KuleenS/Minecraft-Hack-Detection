@@ -1,6 +1,7 @@
 import struct
 from Packets import Packet
 from utils.decode import read_var_int
+import uuid
 
 class SpawnPlayerPacket(Packet):
     def __init__(self, timestamp: int, length: int, byte_array, id:int):
@@ -17,8 +18,9 @@ class SpawnPlayerPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
-        uuid, x, y, z, yaw, pitch, current_item = struct.unpack('>QQ>i>i>ibbh', b[:32])
-        self.uuid = uuid
+        decoded_uuid = uuid.UUID(bytes=b[:16])
+        x, y, z, yaw, pitch, current_item = struct.unpack('>iiibbh', b[16:32])
+        self.uuid = decoded_uuid
         self.x = x
         self.y = y
         self.z = z

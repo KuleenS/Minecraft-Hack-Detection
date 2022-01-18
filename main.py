@@ -40,7 +40,8 @@ def main(args):
             length-=1
             packets.append(classify_packet(timestamp, length, byte_array, id))
     packets = [x for x in packets if x is not None]
-    packets[0].decode()
+    for packet in packets:
+        packet.decode()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Extract position data from 1.8 mcpr files')

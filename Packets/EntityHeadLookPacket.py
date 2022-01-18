@@ -11,5 +11,5 @@ class EntityHeadLookPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
-        head_yaw = struct.unpack('b', b)
+        head_yaw = struct.unpack('>b', b)
         self.head_yaw = head_yaw/256.0
