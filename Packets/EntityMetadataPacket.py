@@ -1,7 +1,7 @@
 from Packets.Packet import Packet
-import io
 import struct
-from utils.decode import read_var_int, read_metadata
+from utils.decode import read_var_int
+from Types import Metadata
 
 
 class EntityMetadataPacket(Packet):
@@ -13,6 +13,19 @@ class EntityMetadataPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
+        metadata_entries = []
+        while True:
+            index = struct.unpack(">B", buff[:1])
+            if index == 255:
+                break
+            else:
+                buff = buff[1:]
+                type_output, buff = read_var_int(buff)
+                metadata_entry = Metadata(index, type_output, buff)
+                buff = metadata_entry.decode()
+                metadata_entries.append(metadata_entry)
+        
+        self.metadata = metadata_entries
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

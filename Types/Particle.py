@@ -1,6 +1,6 @@
 from utils.decode import read_var_int
 from utils.consts import PARTICLE_ID_DICT
-from Types import Position, Slot, NBT
+from Types import Position, Slot
 import struct
 
 class Particle:
@@ -20,7 +20,7 @@ class Particle:
                     value, b = read_var_int(b)
                     data.append(value)
                 elif scheme=='slot':
-                    slot = slot(b)
+                    slot = Slot(b)
                     b = slot.decode()
                     data.append(slot)
                 elif scheme=='position':
@@ -29,7 +29,7 @@ class Particle:
                     data.append(pos)
                 elif scheme=='string':
                     length, b = read_var_int(b)
-                    string_output = struct.unpack(f">{length}s", b)[0]
+                    string_output = struct.unpack(f">{length}s", b[:length])[0]
                     data.append(string_output)
                 else:
                     float_output = struct.unpack(f">{scheme}", b[:4])[0]
