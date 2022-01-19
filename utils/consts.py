@@ -27,5 +27,5 @@ PARTICLE_ID_DICT = {
     15 : ['f', 'f', 'f', 'f', 'f', 'f', 'f'],
     24 : ['varint'],
     35 : ['slot'],
-    36 : ['position', 'string', 'varint', 'varint']
+    36 : ['position', 'string', 'position', 'varint', 'varint']
 }
