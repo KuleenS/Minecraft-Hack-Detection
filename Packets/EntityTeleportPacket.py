@@ -23,3 +23,6 @@ class EntityTeleportPacket(Packet):
         self.yaw = yaw/256.0
         self.pitch = pitch/256.0
         self.on_ground = on_ground
+    
+    def __repr__(self) -> str:
+        return f'Entity Teleport Packet has eid: {self.entity_id}, x: {self.x}, y: {self.y}, z: {self.z}, yaw: {self.yaw}, pitch: {self.pitch}, on_ground: {self.on_ground}'

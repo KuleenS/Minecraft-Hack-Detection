@@ -18,3 +18,6 @@ class EntityVelocityPacket(Packet):
         self.velocity_x = x/8000.0
         self.velocity_y = y/8000.0
         self.velocity_z = z/8000.0
+    
+    def __repr__(self) -> str:
+        return f'Entity Velocity Packet has eid: {self.entity_id}, velocity_x: {self.velocity_x}, velocity_y: {self.velocity_y}, velocity_z: {self.velocity_z}'

@@ -19,3 +19,6 @@ class EntityRelativeMovePacket(Packet):
         self.delta_y = y/32.0
         self.delta_z = z/32.0
         self.on_ground = on_ground
+    
+    def __repr__(self) -> str:
+        return f'Entity Relative Move Packet has eid: {self.entity_id}, delta_x: {self.delta_x}, delta_y: {self.delta_y}, delta_z: {self.delta_z}, on_ground: {self.on_ground}'

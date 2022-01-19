@@ -17,3 +17,6 @@ class EntityLookPacket(Packet):
         self.yaw = yaw/256.0
         self.pitch = pitch/256.0
         self.on_ground = on_ground
+
+    def __repr__(self) -> str:
+        return f'Entity Look Packet has eid: {self.entity_id}, yaw: {self.yaw}, pitch: {self.pitch}, on_ground: {self.on_ground}'

@@ -8,7 +8,7 @@ class Packet(ABC):
         self.id = id
 
     def __repr__(self) -> str:
-        return f'Packet with id {self.id} starting at {self.timestamp} with a byte_array {self.byte_array} of length {self.length}'
+        pass
 
-    def decode(self):
+    def decode(self) -> None:
         pass

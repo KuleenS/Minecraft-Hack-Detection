@@ -27,4 +27,7 @@ class SpawnPlayerPacket(Packet):
         self.yaw = yaw
         self.pitch = pitch 
         self.current_item = current_item
+    
+    def __repr__(self) -> str:
+        return f'Spawn Player Packet has eid: {self.entity_id}, uuid: {self.uuid}, x: {self.x}, y: {self.y}, z: {self.z}, yaw: {self.yaw}, pitch: {self.pitch}, current_item {self.current_item}'
         

@@ -1,7 +1,6 @@
 import io
 import struct
 
-
 def read_var_int(buff: bytes) -> "tuple[int, bytes]":
     buff = io.BytesIO(buff)
     total = 0

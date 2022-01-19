@@ -12,3 +12,6 @@ class EntityStatusPacket(Packet):
         eid, status = struct.unpack('>ib', self.byte_array)
         self.entity_id = eid
         self.status = status
+
+    def __repr__(self) -> str:
+        return f'Entity Status Packet has eid: {self.entity_id}, status: {self.status}'
