@@ -19,3 +19,13 @@ METADATA_TYPE_DICT = {
             17: ['?', 'varint'],
             18: ['pose']
 }
+
+PARTICLE_ID_DICT = {
+    2 : ['varint'],
+    3 : ['varint'],
+    14 : ['f', 'f', 'f', 'f'],
+    15 : ['f', 'f', 'f', 'f', 'f', 'f', 'f'],
+    24 : ['varint'],
+    35 : ['slot'],
+    36 : ['position', 'string', 'varint', 'varint']
+}

@@ -6,8 +6,10 @@ class Position:
         self.x = None
         self.y = None
         self.z = None
+        
     def decode(self):
         val, b = read_var_int(self.byte_array)
         self.x = val >> 38
         self.y = (val << 52 >> 52)
         self.z = (val << 26 >> 38)
+        return b
