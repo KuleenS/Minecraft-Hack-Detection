@@ -13,3 +13,6 @@ class EntityMetadataPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
+
+    def __repr__(self) -> str:
+        return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'
