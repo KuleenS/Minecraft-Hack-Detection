@@ -24,8 +24,15 @@ class EntityMetadataPacket(Packet):
                 metadata_entry = Metadata(index, type_output, buff)
                 buff = metadata_entry.decode()
                 metadata_entries.append(metadata_entry)
-        
+
         self.metadata = metadata_entries
+
+    def get(self):
+        return [{
+            'timestamp': self.metadata,
+            'entity_id': self.entity_id,
+            m.type: m.data,
+        } for m in self.metadata]
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

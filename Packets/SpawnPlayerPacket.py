@@ -3,8 +3,9 @@ from Packets import Packet
 from utils.decode import read_var_int
 import uuid
 
+
 class SpawnPlayerPacket(Packet):
-    def __init__(self, timestamp: int, length: int, byte_array, id:int):
+    def __init__(self, timestamp: int, length: int, byte_array, id: int):
         super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
         self.uuid = None
@@ -12,7 +13,7 @@ class SpawnPlayerPacket(Packet):
         self.y = None
         self.z = None
         self.yaw = None
-        self.pitch = None 
+        self.pitch = None
         self.current_item = None
 
     def decode(self):
@@ -25,9 +26,20 @@ class SpawnPlayerPacket(Packet):
         self.y = y
         self.z = z
         self.yaw = yaw
-        self.pitch = pitch 
+        self.pitch = pitch
         self.current_item = current_item
-    
+
+    def get(self):
+        return {
+            'timestamp': self.timestamp,
+            'uuid': self.uuid,
+            'x': self.x,
+            'y': self.y,
+            'z': self.z,
+            'yaw': self.yaw,
+            'pitch': self.pitch,
+            'current_item': self.current_item
+        }
+
     def __repr__(self) -> str:
         return f'Spawn Player Packet has eid: {self.entity_id}, uuid: {self.uuid}, x: {self.x}, y: {self.y}, z: {self.z}, yaw: {self.yaw}, pitch: {self.pitch}, current_item {self.current_item}'
-        
