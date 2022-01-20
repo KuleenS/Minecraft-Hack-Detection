@@ -1,3 +1,4 @@
+from pydoc import doc
 import struct
 from utils.consts import METADATA_TYPE_DICT
 from Types import Slot, Position, Pose, Particle, NBT, UUID, Chat
@@ -16,52 +17,25 @@ class Metadata:
         buff = self.byte_array
         value = None
         for format in decoding_format:
-            if format=='varint':
-                value, buff = read_var_int(buff)
-                if self.type==17 and value!=0:
-                    value-=1
+            if format=='f':
+                value = struct.unpack('>f', buff[:4])
+                buff = buff[4:]
+            elif format=='h':
+                value = struct.unpack('>h', buff[:2])
+                buff = buff[2:]
+            elif format=='i':
+                value = struct.unpack('>i', buff[:4])
+                buff = buff[4:]
+            elif format=='b':
+                value = struct.unpack('>b', buff[:1])
+                buff = buff[1:]
+            elif format=='string':
+                length, buff = read_var_int(buff)
+                value = struct.unpack(f'>{length}s', buff[:length])
+                buff = buff[length:]
             elif format=='slot':
                 value = Slot(buff)
                 buff = value.decode()
-
-            elif format=='position':
-                value = Position(buff)
-                buff = value.decode()
-
-            elif format=='string':
-                length, buff = read_var_int(buff)
-                value = struct.unpack(f">{length}s", buff[:length])[0]
-                buff = buff[length:]
-
-            elif format=='pose':
-                value = Pose(buff)
-                buff = value.decode()
-
-            elif format=='particle':
-                value = Particle(buff)
-                buff = value.decode()
-
-            elif format=='nbt':
-                value = NBT(buff)
-                buff = value.decode()
-
-            elif format=='uuid':
-                value = UUID(buff)
-                buff = value.decode()
-
-            elif format=='chat':
-                value = Chat(buff)
-                buff = value.decode()
-
-            elif format=='f':
-                value = struct.unpack(f">{format}", buff[:4])[0]
-                buff = buff[4:]
-
-            elif format=='?':
-                value = struct.unpack(f">{format}", buff[:1])[0]
-                buff = buff[1:]
-                if not value:
-                    break
             data.append(value)
         self.data = data
         return buff
