@@ -1,5 +1,4 @@
 import struct
-from Types.Metadata import Metadata
 from utils.consts import METADATA_TYPE_DICT
 from Types import Slot, Position, Pose, Particle, NBT, UUID, Chat
 from utils.decode import read_var_int 
@@ -15,10 +14,12 @@ class Metadata:
         decoding_format = METADATA_TYPE_DICT[self.type]
         data = []
         buff = self.byte_array
+        value = None
         for format in decoding_format:
             if format=='varint':
                 value, buff = read_var_int(buff)
-
+                if self.type==17 and value!=0:
+                    value-=1
             elif format=='slot':
                 value = Slot(buff)
                 buff = value.decode()

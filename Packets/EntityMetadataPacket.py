@@ -15,14 +15,14 @@ class EntityMetadataPacket(Packet):
         self.entity_id = eid
         metadata_entries = []
         while True:
-            index = struct.unpack(">B", buff[:1])
-            if index == 255:
+            index = struct.unpack(">B", b[:1])[0]
+            if index == 127:
                 break
             else:
-                buff = buff[1:]
-                type_output, buff = read_var_int(buff)
-                metadata_entry = Metadata(index, type_output, buff)
-                buff = metadata_entry.decode()
+                b = b[1:]
+                type_output, b = read_var_int(b)
+                metadata_entry = Metadata(index, type_output, b)
+                b = metadata_entry.decode()
                 metadata_entries.append(metadata_entry)
         
         self.metadata = metadata_entries

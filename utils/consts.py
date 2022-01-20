@@ -16,7 +16,7 @@ METADATA_TYPE_DICT = {
             14: ['nbt'],
             15: ['particle'],
             16: ['varint', 'varint', 'varint'],
-            17: ['?', 'varint'],
+            17: ['varint'],
             18: ['pose']
 }
 
