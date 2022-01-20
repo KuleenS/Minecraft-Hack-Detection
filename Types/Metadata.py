@@ -1,5 +1,4 @@
 import struct
-from Types.Metadata import Metadata
 from utils.consts import METADATA_TYPE_DICT
 from Types import Slot, Position, Pose, Particle, NBT, UUID, Chat
 from utils.decode import read_var_int
