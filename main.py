@@ -3,6 +3,7 @@ import argparse
 from utils.classify import classify_packet
 from os.path import exists
 
+
 def main(args):
     packets = []
     if not exists(args.file):
@@ -21,6 +22,7 @@ def main(args):
             packet and packets.append(packet)
     for packet in packets:
         packet.decode()
+        print(packet.get())
 
 
 if __name__ == "__main__":
