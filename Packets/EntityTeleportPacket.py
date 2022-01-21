@@ -17,9 +17,9 @@ class EntityTeleportPacket(Packet):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
         x, y, z, yaw, pitch, on_ground = struct.unpack('>iiibb?', b)
-        self.x = x
-        self.y = y
-        self.z = z
+        self.x = x/32.0
+        self.y = y/32.0
+        self.z = z/32.0
         self.yaw = yaw/256.0
         self.pitch = pitch/256.0
         self.on_ground = on_ground
