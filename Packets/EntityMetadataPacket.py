@@ -29,9 +29,9 @@ class EntityMetadataPacket(Packet):
 
     def get(self):
         return [{
-            'timestamp': self.metadata,
+            'timestamp': self.timestamp,
             'entity_id': self.entity_id,
-            m.type: m.data,
+            m.index: m.data,
         } for m in self.metadata]
 
     def __repr__(self) -> str:

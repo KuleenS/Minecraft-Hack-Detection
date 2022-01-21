@@ -1,11 +1,15 @@
 import struct
 import argparse
+from Packets.EntityMetadataPacket import EntityMetadataPacket
 from utils.classify import classify_packet
 from os.path import exists
+import json
 
 
 def main(args):
     packets = []
+    all_parsed = []
+    final = []
     if not exists(args.file):
         raise ValueError('File does not exist')
     elif args.file.split('.')[-1] != "tmcpr":
@@ -22,7 +26,26 @@ def main(args):
             packet and packets.append(packet)
     for packet in packets:
         packet.decode()
-        print(packet.get())
+        parsed = packet.get()
+        try:
+            json.dumps(parsed)
+        except Exception as e:
+            print(e)
+            print(parsed)
+            exit()
+        # all_parsed.append(parsed)
+
+    # for parsed_packet in all_parsed:
+    #     if type(parsed_packet) == list:
+    #         for nested in parsed_packet:
+    #             final.append(nested)
+    #     else:
+    #         final.append(parsed_packet)
+
+    print(final)
+
+    with open('test.json', 'w') as f:
+        json.dump(final, f)
 
 
 if __name__ == "__main__":
