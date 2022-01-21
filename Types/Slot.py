@@ -1,6 +1,4 @@
-from re import I
 import struct
-from utils.decode import read_var_int
 from Types import NBT
 
 class Slot:
