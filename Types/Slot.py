@@ -26,4 +26,4 @@ class Slot:
             return b
     
     def __repr__(self):
-        return f"Item Slot with item id: {self.item_id}, count: {self.count}, damage {self.damage}, and NBT data {self.nbt}"
+        return f"Item Slot with item id: {self.item_id}, count: {self.item_count}, damage {self.item_damange}, and NBT data {self.nbt}"

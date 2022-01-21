@@ -41,12 +41,14 @@ class Metadata:
         return buff
     
     def __repr__(self):
-        if self.type==1:
+        if self.type==0:
             return f'Metadata type: byte with data: {self.data}'
-        elif self.type==2:
+        elif self.type==1:
             return f'Metadata type: short with data: {self.data}'
-        elif self.type==3:
+        elif self.type==2:
             return f'Metadata type: int with data: {self.data}'
+        elif self.type==3:
+            return f'Metadata type: string with data: {self.data}'    
         elif self.type==4:
             return f'Metadata type: string with data: {self.data}'
         elif self.type==5:
