@@ -1,6 +1,4 @@
-from re import I
 import struct
-from utils.decode import read_var_int
 from Types import NBT
 
 class Slot:
@@ -8,20 +6,24 @@ class Slot:
         self.byte_array = byte_array
         self.item_id = None
         self.item_count = None
+        self.item_damange = None
         self.nbt = None
 
     def decode(self):
-        bool_output = struct.unpack(">?", self.byte_array[:1])[0]
-        b = self.byte_array[1:]
-        if not bool_output:
+        item_id = struct.unpack(">h", self.byte_array[:2])[0]
+        b = self.byte_array[2:]
+        self.item_id = item_id
+        if item_id==-1:
             return b
         else:
-            id_output, b = read_var_int(b)
-            self.item_id = id_output
-            item_count = struct.unpack(">b", b[:1])[0]
+            item_count, item_damage = struct.unpack(">bh", b[:3])
             self.item_count = item_count
-            b = b[1:]
+            self.item_damange = item_damage
+            b = b[3:]
             nbt = NBT(b)
             b = nbt.decode()
             self.nbt = nbt
             return b
+    
+    def __repr__(self):
+        return f"Item Slot with item id: {self.item_id}, count: {self.item_count}, damage {self.item_damange}, and NBT data {self.nbt}"

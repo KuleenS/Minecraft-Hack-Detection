@@ -22,11 +22,11 @@ class SpawnPlayerPacket(Packet):
         decoded_uuid = uuid.UUID(bytes=b[:16])
         x, y, z, yaw, pitch, current_item = struct.unpack('>iiibbh', b[16:32])
         self.uuid = decoded_uuid
-        self.x = x
-        self.y = y
-        self.z = z
-        self.yaw = yaw
-        self.pitch = pitch
+        self.x = x/32.0
+        self.y = y/32.0
+        self.z = z/32.0
+        self.yaw = yaw/256.0
+        self.pitch = pitch/256.0
         self.current_item = current_item
 
     def get(self):

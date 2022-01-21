@@ -1,23 +1,12 @@
 METADATA_TYPE_DICT = {
-            0: ['b'],
-            1: ['varint'],
-            2: ['f'],
-            3: ['string'],
-            4: ['chat'],
-            5: ['?', 'chat'],
-            6: ['slot'],
-            7: ['?'],
-            8: ['f', 'f', 'f'],
-            9: ['position'],
-            10: ['?', 'position'], 
-            11: ['varint'],
-            12: ['?', 'uuid'],
-            13: ['?', 'varint'],
-            14: ['nbt'],
-            15: ['particle'],
-            16: ['varint', 'varint', 'varint'],
-            17: ['?', 'varint'],
-            18: ['pose']
+    0: ['b'],
+    1: ['h'],
+    2: ['i'],
+    3: ['f'],
+    4: ['string'],
+    5: ['slot'],
+    6: ['i', 'i', 'i'],
+    7: ['f', 'f', 'f']
 }
 
 PARTICLE_ID_DICT = {
