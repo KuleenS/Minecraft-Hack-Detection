@@ -24,3 +24,6 @@ class Slot:
             b = nbt.decode()
             self.nbt = nbt
             return b
+    
+    def __repr__(self):
+        return f"Item Slot with item id: {self.item_id}, count: {self.count}, damage {self.damage}, and NBT data {self.nbt}"

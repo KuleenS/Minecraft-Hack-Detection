@@ -39,5 +39,21 @@ class Metadata:
             data.append(value)
         self.data = data
         return buff
+    
+    def __repr__(self):
+        if self.type==1:
+            return f'Metadata type: byte with data: {self.data}'
+        elif self.type==2:
+            return f'Metadata type: short with data: {self.data}'
+        elif self.type==3:
+            return f'Metadata type: int with data: {self.data}'
+        elif self.type==4:
+            return f'Metadata type: string with data: {self.data}'
+        elif self.type==5:
+            return f'Metadata type: Slot with data: {self.data}'
+        elif self.type==6:
+            return f'Metadata type: x,y,z with data: {self.data}'
+        elif self.type==7:
+            return f'Metadata type: pitch,yaw,roll with data: {self.data}'
 
     #An EntityMetadataPacket consists of an array of Metadata objects
