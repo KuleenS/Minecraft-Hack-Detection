@@ -19,16 +19,16 @@ class Metadata:
         value = None
         for format in decoding_format:
             if format == 'f':
-                value = struct.unpack('>f', buff[:4])
+                value = struct.unpack('>f', buff[:4])[0]
                 buff = buff[4:]
             elif format == 'h':
-                value = struct.unpack('>h', buff[:2])
+                value = struct.unpack('>h', buff[:2])[0]
                 buff = buff[2:]
             elif format == 'i':
-                value = struct.unpack('>i', buff[:4])
+                value = struct.unpack('>i', buff[:4])[0]
                 buff = buff[4:]
             elif format == 'b':
-                value = struct.unpack('>b', buff[:1])
+                value = struct.unpack('>b', buff[:1])[0]
                 buff = buff[1:]
             elif format == 'string':
                 length, buff = read_var_int(buff)
