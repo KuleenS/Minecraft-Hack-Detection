@@ -1,4 +1,6 @@
 from abc import ABC
+from typing import Any
+
 
 class Packet(ABC):
     def __init__(self, timestamp: int, length: int, byte_array, id=None):
@@ -7,8 +9,11 @@ class Packet(ABC):
         self.byte_array = byte_array
         self.id = id
 
-    def __repr__(self) -> str:
+    def decode(self) -> None:
         pass
 
-    def decode(self) -> None:
+    def get(self) -> 'dict[str, any] | list[dict[str, Any]]':
+        pass
+
+    def __repr__(self) -> str:
         pass

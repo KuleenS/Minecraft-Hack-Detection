@@ -4,7 +4,7 @@ from Packets.Packet import Packet
 
 
 class EntityVelocityPacket(Packet):
-    def __init__(self, timestamp: int, length: int, byte_array:bytes, id:int):
+    def __init__(self, timestamp: int, length: int, byte_array: bytes, id: int):
         super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
         self.velocity_x = None
@@ -14,10 +14,19 @@ class EntityVelocityPacket(Packet):
     def decode(self):
         eid, b = read_var_int(self.byte_array)
         self.entity_id = eid
-        x,y,z = struct.unpack('>hhh', b)
+        x, y, z = struct.unpack('>hhh', b)
         self.velocity_x = x/8000.0
         self.velocity_y = y/8000.0
         self.velocity_z = z/8000.0
-    
+
+    def get(self):
+        return {
+            'timestamp': self.timestamp,
+            'entity_id': self.entity_id,
+            'velocity_x': self.velocity_x,
+            'velocity_y': self.velocity_y,
+            'velocity_z': self.velocity_z,
+        }
+
     def __repr__(self) -> str:
         return f'Entity Velocity Packet has eid: {self.entity_id}, velocity_x: {self.velocity_x}, velocity_y: {self.velocity_y}, velocity_z: {self.velocity_z}'
