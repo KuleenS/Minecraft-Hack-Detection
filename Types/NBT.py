@@ -1,5 +1,5 @@
 import io
-from nbt import nbt
+from utils.NBTparse import NBTFile
 
 class NBT:
     def __init__(self,byte_array):
@@ -7,6 +7,6 @@ class NBT:
         self.NBT_data = None
     
     def decode(self):
-        data = nbt.NBTFile(fileobj = io.BytesIO(self.byte_array))
+        data = NBTFile(buffer = io.BytesIO(self.byte_array))
         self.NBT_data = data
-            
+        return data.buffer_
