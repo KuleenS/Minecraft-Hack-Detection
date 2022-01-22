@@ -2,9 +2,12 @@ from Packets.Packet import Packet
 import struct
 from utils.decode import read_var_int
 from Types import Metadata
+import json
 
 
 class EntityMetadataPacket(Packet):
+    METADATA_TYPE_FILTER_OUT = [4]
+
     def __init__(self, timestamp: int, length: int, byte_array, id: int):
         super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
@@ -31,8 +34,8 @@ class EntityMetadataPacket(Packet):
         return [{
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
-            m.index: m.data,
-        } for m in self.metadata]
+            m.type: m.data,
+        } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

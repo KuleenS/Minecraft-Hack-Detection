@@ -32,7 +32,8 @@ class Metadata:
                 buff = buff[1:]
             elif format == 'string':
                 length, buff = read_var_int(buff)
-                value = struct.unpack(f'>{length}s', buff[:length])
+                value = struct.unpack(
+                    f'>{length}s', buff[:length])[0].decode('utf-8')
                 buff = buff[length:]
             elif format == 'slot':
                 value = Slot(buff)
@@ -49,7 +50,7 @@ class Metadata:
         elif self.type == 2:
             return f'Metadata type: int with data: {self.data}'
         elif self.type == 3:
-            return f'Metadata type: string with data: {self.data}'
+            return f'Metadata type: float with data: {self.data}'
         elif self.type == 4:
             return f'Metadata type: string with data: {self.data}'
         elif self.type == 5:

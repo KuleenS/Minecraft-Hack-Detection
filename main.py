@@ -27,25 +27,17 @@ def main(args):
     for packet in packets:
         packet.decode()
         parsed = packet.get()
-        try:
-            json.dumps(parsed)
-        except Exception as e:
-            print(e)
-            print(parsed)
-            exit()
-        # all_parsed.append(parsed)
+        all_parsed.append(parsed)
 
-    # for parsed_packet in all_parsed:
-    #     if type(parsed_packet) == list:
-    #         for nested in parsed_packet:
-    #             final.append(nested)
-    #     else:
-    #         final.append(parsed_packet)
+    for parsed_packet in all_parsed:
+        if type(parsed_packet) == list:
+            for nested in parsed_packet:
+                final.append(nested)
+        else:
+            final.append(parsed_packet)
 
-    print(final)
-
-    with open('test.json', 'w') as f:
-        json.dump(final, f)
+    # with open('test.json', 'w') as f:
+    #     json.dump(final, f)
 
 
 if __name__ == "__main__":
