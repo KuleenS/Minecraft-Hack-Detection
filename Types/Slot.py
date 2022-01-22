@@ -20,7 +20,7 @@ class Slot:
             self.item_count = item_count
             self.item_damange = item_damage
             b = b[3:]
-            nbt = NBT(b)
+            nbt = NBT.NBT(b)
             b = nbt.decode()
             self.nbt = nbt
             return b

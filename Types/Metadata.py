@@ -1,7 +1,7 @@
 from pydoc import doc
 import struct
 from utils.consts import METADATA_TYPE_DICT
-from Types import Slot, Position, Pose, Particle, NBT, UUID, Chat
+from Types import Slot
 from utils.decode import read_var_int
 
 
@@ -36,7 +36,7 @@ class Metadata:
                     f'>{length}s', buff[:length])[0].decode('utf-8')
                 buff = buff[length:]
             elif format == 'slot':
-                value = Slot(buff)
+                value = Slot.Slot(buff)
                 buff = value.decode()
             data.append(value)
         self.data = data
