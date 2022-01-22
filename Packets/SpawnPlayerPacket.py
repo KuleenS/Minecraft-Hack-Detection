@@ -32,7 +32,8 @@ class SpawnPlayerPacket(Packet):
     def get(self):
         return {
             'timestamp': self.timestamp,
-            'uuid': self.uuid,
+            'entity_id': self.entity_id,
+            'uuid': self.uuid.hex,
             'x': self.x,
             'y': self.y,
             'z': self.z,
