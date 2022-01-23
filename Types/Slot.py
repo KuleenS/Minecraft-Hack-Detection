@@ -20,9 +20,13 @@ class Slot:
             self.item_count = item_count
             self.item_damange = item_damage
             b = b[3:]
-            nbt = NBT.NBT(b)
-            b = nbt.decode()
-            self.nbt = nbt
+            nbt_bool = struct.unpack(">b", b[:1])[0]
+            if nbt_bool != 0:
+                nbt = NBT.NBT(b)
+                b = nbt.decode()
+                self.nbt = nbt
+            else:
+                b = b[1:]
             return b
     
     def __repr__(self):
