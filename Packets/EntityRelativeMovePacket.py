@@ -23,6 +23,7 @@ class EntityRelativeMovePacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity_relative_move',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             'delta_x': self.delta_x,

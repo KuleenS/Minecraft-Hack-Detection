@@ -31,6 +31,7 @@ class SpawnPlayerPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'spawn_player',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             'uuid': self.uuid.hex,

@@ -6,7 +6,7 @@ import json
 
 
 class EntityMetadataPacket(Packet):
-    METADATA_TYPE_FILTER_OUT = [4]
+    METADATA_TYPE_FILTER_OUT = [4, 5]
 
     def __init__(self, timestamp: int, length: int, byte_array, id: int):
         super().__init__(timestamp, length, byte_array, id)
@@ -32,6 +32,7 @@ class EntityMetadataPacket(Packet):
 
     def get(self):
         return [{
+            'packet_type': f'meta_{m.type}',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             m.type: m.data,

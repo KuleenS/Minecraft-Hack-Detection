@@ -21,6 +21,7 @@ class EntityLookPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity_look',
             'timestamp': self.timestamp,
             'yaw': self.yaw,
             'pitch': self.pitch,

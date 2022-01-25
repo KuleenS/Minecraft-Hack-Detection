@@ -13,6 +13,7 @@ class EntityPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id
         }

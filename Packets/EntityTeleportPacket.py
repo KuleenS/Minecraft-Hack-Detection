@@ -27,6 +27,7 @@ class EntityTeleportPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity_teleport',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             'x': self.x,
