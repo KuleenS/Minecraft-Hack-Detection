@@ -1,8 +1,4 @@
 from math import cos, sin
-from re import X
-from xml.etree.ElementInclude import DEFAULT_MAX_INCLUSION_DEPTH
-
-from itsdangerous import TimestampSigner
 
 def process_head_yaw(packets: list[dict]) -> "tuple[list[int], list[float]]":
     timestamps = []
@@ -12,7 +8,7 @@ def process_head_yaw(packets: list[dict]) -> "tuple[list[int], list[float]]":
         head_yaw = packet['head_yaw']
         if head_yaw<0:
             head_yaw+=1
-        head_yaws.append(head_yaws)
+        head_yaws.append(head_yaw)
     return timestamps, head_yaws
 
 def process_yaw_pitch(packets: list[dict]) -> "tuple[list[int], list[float], list[float], list[float]]":
