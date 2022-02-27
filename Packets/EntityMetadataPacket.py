@@ -35,7 +35,9 @@ class EntityMetadataPacket(Packet):
             'packet_type': f'meta_{m.index}',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
-            m.type: m.data,
+            'index': m.index,
+            'data': m.data,
+            'type': m.type
         } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
 
     def __repr__(self) -> str:
