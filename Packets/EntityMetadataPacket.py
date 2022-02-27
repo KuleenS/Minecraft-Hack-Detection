@@ -32,7 +32,7 @@ class EntityMetadataPacket(Packet):
 
     def get(self):
         return [{
-            'packet_type': f'meta_{m.type}',
+            'packet_type': f'meta_{m.index}',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             m.type: m.data,
