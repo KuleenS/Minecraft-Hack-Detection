@@ -36,8 +36,8 @@ def main(args):
         else:
             final.append(parsed_packet)
 
-    # with open('test.json', 'w') as f:
-    #     json.dump(final, f)
+    with open('test.json', 'w') as f:
+        json.dump(final, f)
 
 
 if __name__ == "__main__":
