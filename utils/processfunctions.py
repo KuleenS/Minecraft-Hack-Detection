@@ -1,5 +1,7 @@
 from math import cos, sin, radians
-
+"""
+Packets Needed: Entity Head Look
+"""
 def process_head_yaw(packets: list[dict]) -> "tuple[list[int], list[float]]":
     timestamps = []
     head_yaws = []
@@ -10,7 +12,9 @@ def process_head_yaw(packets: list[dict]) -> "tuple[list[int], list[float]]":
             head_yaw+=1
         head_yaws.append(head_yaw)
     return timestamps, head_yaws
-
+"""
+Packets Needed: Spawn Player, Entity Teleport, Entity Look and Relative Move, Entity Look, Entity
+"""
 def process_yaw_pitch(packets: list[dict]) -> "tuple[list[int], list[float], list[float], list[float]]":
     timestamps = []
     X = []
@@ -22,10 +26,11 @@ def process_yaw_pitch(packets: list[dict]) -> "tuple[list[int], list[float], lis
             Y.append[Y[-1]]
             Z.append[Z[-1]]
         else:
-            print(packet['pitch'], packet['yaw'])
+            print(packet['packet_type'],packet['pitch'], packet['yaw'])
+            pitch = packet['pitch']
+            yaw = packet['yaw']
             pitch = radians((packet['pitch']*256))
             yaw = radians((packet['yaw']*256))
-            print(pitch, yaw)
             x = -cos(pitch) * sin(yaw) 
             y = -sin(pitch) 
             z =  cos(pitch) * cos(yaw)
@@ -34,7 +39,9 @@ def process_yaw_pitch(packets: list[dict]) -> "tuple[list[int], list[float], lis
             Z.append(z)
         timestamps.append(packet['timestamp'])
     return timestamps, X, Y, Z
-
+"""
+Packets Needed: Entity Status
+"""
 def process_status(packets: list[dict]) -> "tuple[list[int], list[int]]":
     timestamps = []
     status = []
@@ -46,7 +53,9 @@ def process_status(packets: list[dict]) -> "tuple[list[int], list[int]]":
         timestamps.append(packet['timestamp'])
     return timestamps, status
 
-
+"""
+Packets Needed: Entity Metadata and Spawn Player
+"""
 def process_metadata(packets: list[dict]) -> "tuple[list[int], list[int], list[int], list[int], list[int], list[int]]":
     timestamps = []
     On_Fire = []
@@ -71,7 +80,9 @@ def process_metadata(packets: list[dict]) -> "tuple[list[int], list[int], list[i
         timestamps.append(packet['timestamp'])
     return timestamps, On_Fire, Crouched, Sprinting, Eating_Drinking_Blocking, Invisible
 
-
+"""
+Packets Needed: Entity, Entity Look and Relative Move, Entity Teleport, Entity Velocity, Entity Relative Move, Spawn Player
+"""
 def process_xyz(packets: list[dict]) -> "tuple[list[int], list[float], list[float], list[float]]":
     timestamps = []
     X = []
@@ -102,7 +113,9 @@ def process_xyz(packets: list[dict]) -> "tuple[list[int], list[float], list[floa
             Z.append(Z[-1]+delta_z)
         timestamps.append(packet['timestamp'])
     return timestamps, X, Y, Z
-
+"""
+Packets Needed: Entity Look, Entity Look and Relative Move, Entity Relative Move, Entity Teleport, Entity
+"""
 def process_on_ground(packets: list[dict]) -> "tuple[list[int], list[int]]":
     timestamps = []
     on_ground = []
