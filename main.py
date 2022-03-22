@@ -5,7 +5,7 @@ from utils.classify import classify_packet
 from os.path import exists
 import json
 from utils.consts import ALL_PACKET_TYPES, TIME_SERIES_PACKETS
-
+from utils.interpolate import interpolate
 
 def main(args):
     packets = []
@@ -38,6 +38,8 @@ def main(args):
             final.append(parsed_packet)
     entity_ids = list(set([x['entity_id'] for x in final if 'uuid' in x]))
     player_time_series = {}
+    biggest_timestamp = max([x['timestamp'] for x in final])
+    smallest_timestamp = min([x['timestamp'] for x in final])
     for player in entity_ids:
         packets_for_player = [x for x in final if ('entity_id' in x) and (x['entity_id'] == player)]
         player_dict = {x: [] for x in ALL_PACKET_TYPES}
@@ -53,7 +55,8 @@ def main(args):
             for key in packets_associated_with_time_series:
                 packets_to_process.extend(player_dict.get(key))
             packets_to_process = sorted(packets_to_process, key = lambda i: i['timestamp'])
-            time_series_for_player[time_series] = function_associated_with_time_series(packets_to_process)
+            output_time_series = function_associated_with_time_series(packets_to_process)
+            time_series_for_player[time_series] = interpolate(output_time_series, smallest_timestamp, biggest_timestamp)
         player_time_series[player] = time_series_for_player
 
         
