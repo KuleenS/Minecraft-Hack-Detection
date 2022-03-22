@@ -31,14 +31,17 @@ class EntityMetadataPacket(Packet):
         self.metadata = metadata_entries
 
     def get(self):
-        return [{
-            'packet_type': f'meta_{m.type}',
-            'timestamp': self.timestamp,
-            'entity_id': self.entity_id,
-            'index': m.index,
-            'data': m.data,
-            'type': m.type
-        } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        return {
+            "entity_id": self.entity_id,
+            "packet_type" : "entity_metadata",
+            "timestamp": self.timestamp,
+            "metadata":[{
+                'packet_type': f'meta_{m.type}',
+                'index': m.index,
+                'data': m.data,
+                'type': m.type
+                } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        }
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

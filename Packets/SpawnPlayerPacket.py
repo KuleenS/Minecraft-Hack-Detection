@@ -4,7 +4,10 @@ from utils.decode import read_var_int
 import uuid
 from Types import Metadata
 
+
 class SpawnPlayerPacket(Packet):
+    METADATA_TYPE_FILTER_OUT = [4, 5]
+
     def __init__(self, timestamp: int, length: int, byte_array, id: int):
         super().__init__(timestamp, length, byte_array, id)
         self.entity_id = None
@@ -57,12 +60,12 @@ class SpawnPlayerPacket(Packet):
             'yaw': self.yaw,
             'pitch': self.pitch,
             'current_item': self.current_item,
-            'metadata' : [{
+            'metadata': [{
                 'packet_type': f'meta_{m.type}',
-                'timestamp': self.timestamp,
-                'entity_id': self.entity_id,
-                m.type: m.data,
-                } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+                'index': m.index,
+                'data': m.data,
+                'type': m.type
+            } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
         }
 
     def __repr__(self) -> str:
