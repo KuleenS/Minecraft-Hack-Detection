@@ -101,7 +101,6 @@ def process_xyz(packets: 'list[dict]') -> "tuple[list[int], list[float], list[fl
     Y = []
     Z = []
     for i, packet in enumerate(packets):
-        print(packet)
         if packet['packet_type']=='entity' and len(X)!=0:
             X.append[X[-1]]
             Y.append[Y[-1]]
@@ -110,7 +109,7 @@ def process_xyz(packets: 'list[dict]') -> "tuple[list[int], list[float], list[fl
             X.append(packet['x'])
             Y.append(packet['y'])
             Z.append(packet['z'])
-        elif packet['packet_type'] in ['entity_relative_move', 'entity_look_and_relative_move']:
+        elif packet['packet_type'] in ['entity_relative_move', 'entity_look_and_relative_move'] and len(X)!=0:
             X.append(X[-1]+packet['delta_x'])
             Y.append(Y[-1]+packet['delta_y'])
             Z.append(Z[-1]+packet['delta_z'])
