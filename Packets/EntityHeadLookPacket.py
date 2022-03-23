@@ -17,6 +17,7 @@ class EntityHeadLookPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity_head_look',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             'head_yaw': self.head_yaw

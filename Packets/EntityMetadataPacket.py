@@ -6,7 +6,7 @@ import json
 
 
 class EntityMetadataPacket(Packet):
-    METADATA_TYPE_FILTER_OUT = [4]
+    METADATA_TYPE_FILTER_OUT = [4, 5]
 
     def __init__(self, timestamp: int, length: int, byte_array, id: int):
         super().__init__(timestamp, length, byte_array, id)
@@ -31,11 +31,17 @@ class EntityMetadataPacket(Packet):
         self.metadata = metadata_entries
 
     def get(self):
-        return [{
-            'timestamp': self.timestamp,
-            'entity_id': self.entity_id,
-            m.type: m.data,
-        } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        return {
+            "entity_id": self.entity_id,
+            "packet_type" : "entity_metadata",
+            "timestamp": self.timestamp,
+            "metadata":[{
+                'packet_type': f'meta_{m.type}',
+                'index': m.index,
+                'data': m.data,
+                'type': m.type
+                } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        }
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

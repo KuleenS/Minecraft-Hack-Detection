@@ -21,6 +21,7 @@ class EntityVelocityPacket(Packet):
 
     def get(self):
         return {
+            'packet_type': 'entity_velocity',
             'timestamp': self.timestamp,
             'entity_id': self.entity_id,
             'velocity_x': self.velocity_x,
