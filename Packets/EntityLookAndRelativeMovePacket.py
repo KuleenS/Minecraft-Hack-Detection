@@ -15,10 +15,10 @@ class EntityLookAndRelativeMovePacket(Packet):
         self.on_ground = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid =  read_var_int(self.byte_array)
         self.entity_id = eid
         delta_x, delta_y, delta_z, yaw, pitch, on_ground = struct.unpack(
-            '>bbbbb?', b)
+            '>bbbbb?', self.byte_array.read(6))
         self.delta_x = delta_x/32.0
         self.delta_y = delta_y/32.0
         self.delta_z = delta_z/32.0

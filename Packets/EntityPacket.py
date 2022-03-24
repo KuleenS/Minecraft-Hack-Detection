@@ -8,7 +8,7 @@ class EntityPacket(Packet):
         self.entity_id = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
 
     def get(self):

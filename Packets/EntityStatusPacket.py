@@ -10,7 +10,7 @@ class EntityStatusPacket(Packet):
         self.status = None
 
     def decode(self):
-        eid, status = struct.unpack('>ib', self.byte_array)
+        eid, status = struct.unpack('>ib', self.byte_array.read(5))
         self.entity_id = eid
         self.status = status
 

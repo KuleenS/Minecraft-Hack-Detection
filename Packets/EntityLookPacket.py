@@ -12,9 +12,9 @@ class EntityLookPacket(Packet):
         self.on_ground = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
-        yaw, pitch, on_ground = struct.unpack('>bb?', b)
+        yaw, pitch, on_ground = struct.unpack('>bb?', self.byte_array.read(3))
         self.yaw = yaw/256.0
         self.pitch = pitch/256.0
         self.on_ground = on_ground

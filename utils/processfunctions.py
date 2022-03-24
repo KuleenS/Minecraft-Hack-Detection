@@ -114,9 +114,9 @@ def process_xyz(packets: 'list[dict]') -> "tuple[list[int], list[float], list[fl
             Y.append(Y[-1]+packet['delta_y'])
             Z.append(Z[-1]+packet['delta_z'])
         elif packet['packet_type'] == 'entity_velocity' and len(X)!=0:
-            velocity_x = ((packet['velocity_x']/8000)*20)/1000
-            velocity_y = ((packet['velocity_y']/8000)*20)/1000
-            velocity_z = ((packet['velocity_z']/8000)*20)/1000
+            velocity_x = ((packet['velocity_x'])*20)/1000
+            velocity_y = ((packet['velocity_y'])*20)/1000
+            velocity_z = ((packet['velocity_z'])*20)/1000
             delta_x = velocity_x * (packet['timestamp'] - packets[i-1]['timestamp'])
             delta_y = velocity_y * (packet['timestamp'] - packets[i-1]['timestamp'])
             delta_z = velocity_z * (packet['timestamp'] - packets[i-1]['timestamp'])

@@ -6,6 +6,5 @@ class Pose:
         self.pose = None
 
     def decode(self):
-        pose, b = read_var_int(self.byte_array)
+        pose = read_var_int(self.byte_array)
         self.pose = pose
-        return b
