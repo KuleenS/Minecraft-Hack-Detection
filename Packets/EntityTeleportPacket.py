@@ -15,9 +15,9 @@ class EntityTeleportPacket(Packet):
         self.on_ground = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
-        x, y, z, yaw, pitch, on_ground = struct.unpack('>iiibb?', b)
+        x, y, z, yaw, pitch, on_ground = struct.unpack('>iiibb?', self.byte_array.read(15))
         self.x = x/32.0
         self.y = y/32.0
         self.z = z/32.0

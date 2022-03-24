@@ -15,32 +15,25 @@ class Metadata:
     def decode(self):
         decoding_format = METADATA_TYPE_DICT[self.type]
         data = []
-        buff = self.byte_array
         value = None
         for format in decoding_format:
             if format == 'f':
-                value = struct.unpack('>f', buff[:4])[0]
-                buff = buff[4:]
+                value = struct.unpack('>f', self.byte_array.read(4))[0]
             elif format == 'h':
-                value = struct.unpack('>h', buff[:2])[0]
-                buff = buff[2:]
+                value = struct.unpack('>h', self.byte_array.read(2))[0]
             elif format == 'i':
-                value = struct.unpack('>i', buff[:4])[0]
-                buff = buff[4:]
+                value = struct.unpack('>i', self.byte_array.read(4))[0]
             elif format == 'b':
-                value = struct.unpack('>b', buff[:1])[0]
-                buff = buff[1:]
+                value = struct.unpack('>b', self.byte_array.read(1))[0]
             elif format == 'string':
-                length, buff = read_var_int(buff)
+                length = read_var_int(self.byte_array)
                 value = struct.unpack(
-                    f'>{length}s', buff[:length])[0].decode('utf-8')
-                buff = buff[length:]
+                    f'>{length}s', self.byte_array.read(length))[0].decode('utf-8')
             elif format == 'slot':
-                value = Slot.Slot(buff)
-                buff = value.decode()
+                value = Slot.Slot(self.byte_array)
+                value.decode()
             data.append(value)
         self.data = data
-        return buff
 
     def __repr__(self):
         if self.type == 0:

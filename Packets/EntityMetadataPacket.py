@@ -14,31 +14,33 @@ class EntityMetadataPacket(Packet):
         self.metadata = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
         metadata_entries = []
         while True:
-            index_var = struct.unpack(">B", b[:1])[0]
+            index_var = struct.unpack(">B", self.byte_array.read(1))[0]
             if index_var == 127:
                 break
             else:
-                b = b[1:]
                 index = index_var & 0x1F
                 type = index_var >> 5
-                metadata_entry = Metadata(index, type, b)
-                b = metadata_entry.decode()
+                metadata_entry = Metadata(index, type, self.byte_array)
+                metadata_entry.decode()
                 metadata_entries.append(metadata_entry)
         self.metadata = metadata_entries
 
     def get(self):
-        return [{
-            'packet_type': f'meta_{m.index}',
-            'timestamp': self.timestamp,
-            'entity_id': self.entity_id,
-            'index': m.index,
-            'data': m.data,
-            'type': m.type
-        } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        return {
+            "entity_id": self.entity_id,
+            "packet_type": "entity_metadata",
+            "timestamp": self.timestamp,
+            "metadata": [{
+                'packet_type': f'meta_{m.type}',
+                'index': m.index,
+                'data': m.data,
+                'type': m.type
+            } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+        }
 
     def __repr__(self) -> str:
         return f'Entity Metadata Packet has eid: {self.entity_id}, metadata: {self.metadata}'

@@ -1,9 +1,13 @@
 import struct
 import argparse
-from Packets.EntityMetadataPacket import EntityMetadataPacket
-from utils.classify import classify_packet
 from os.path import exists
-import json
+import io
+
+
+from utils.classify import classify_packet
+from utils.consts import ALL_PACKET_TYPES, TIME_SERIES_PACKETS
+from utils.interpolate import interpolate
+from utils.decode import read_var_int
 
 
 def main(args):
@@ -19,8 +23,8 @@ def main(args):
             timestamp = struct.unpack('>i', timestamp)[0]
             length = struct.unpack('>i', f.read(4))[0]
             byte_array = f.read(length)
-            id = byte_array[0]
-            byte_array = byte_array[1:]
+            byte_array = io.BytesIO(byte_array)
+            id = read_var_int(byte_array)
             length -= 1
             packet = classify_packet(timestamp, length, byte_array, id)
             packet and packets.append(packet)
@@ -35,6 +39,33 @@ def main(args):
                 final.append(nested)
         else:
             final.append(parsed_packet)
+    entity_ids = list(set([x['entity_id'] for x in final if 'uuid' in x]))
+    print(final)
+    player_time_series = {}
+    biggest_timestamp = max([x['timestamp'] for x in final])
+    smallest_timestamp = min([x['timestamp'] for x in final])
+    for player in entity_ids:
+        packets_for_player = [x for x in final if (
+            'entity_id' in x) and (x['entity_id'] == player)]
+        player_dict = {x: [] for x in ALL_PACKET_TYPES}
+        for packet in packets_for_player:
+            packet_type = packet['packet_type']
+            player_dict[packet_type].append(packet)
+        time_series_for_player = {}
+        for time_series in TIME_SERIES_PACKETS:
+            packets_to_process = []
+            decode_config = TIME_SERIES_PACKETS[time_series]
+            function_associated_with_time_series = decode_config[0]
+            packets_associated_with_time_series = decode_config[1]
+            for key in packets_associated_with_time_series:
+                packets_to_process.extend(player_dict.get(key))
+            packets_to_process = sorted(
+                packets_to_process, key=lambda i: i['timestamp'])
+            output_time_series = function_associated_with_time_series(
+                packets_to_process)
+            time_series_for_player[time_series] = interpolate(
+                output_time_series, smallest_timestamp, biggest_timestamp)
+        player_time_series[player] = time_series_for_player
 
     with open('test.json', 'w') as f:
         json.dump(final, f)
