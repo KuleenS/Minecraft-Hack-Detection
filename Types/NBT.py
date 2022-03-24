@@ -7,6 +7,5 @@ class NBT:
         self.NBT_data = None
     
     def decode(self):
-        data = NBTFile(buffer = io.BytesIO(self.byte_array))
+        data = NBTFile(buffer = self.byte_array)
         self.NBT_data = data
-        return data.buffer_

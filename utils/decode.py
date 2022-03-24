@@ -1,8 +1,7 @@
 import io
 import struct
 
-def read_var_int(buff: bytes) -> "tuple[int, bytes]":
-    buff = io.BytesIO(buff)
+def read_var_int(buff) -> "int":
     total = 0
     shift = 0
     val = 0x80
@@ -12,5 +11,5 @@ def read_var_int(buff: bytes) -> "tuple[int, bytes]":
         shift += 7
     if total & (1 << 31):
         total = total - (1 << 32)
-    return total, buff.read()
+    return total
                     

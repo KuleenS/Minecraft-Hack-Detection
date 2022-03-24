@@ -11,15 +11,12 @@ class Chat:
         self.uuid = None
 
     def decode(self):
-        length, b = read_var_int(self.byte_array)
-        json_output, position_output = struct.unpack(f">{length}sb", b[:length+1])
+        length = read_var_int(self.byte_array)
+        json_output, position_output = struct.unpack(f">{length}sb", self.byte_array.read(length))
         self.JSON_data = json_output
         self.position = position_output
         
-        b = b[length+1:]
-        UUID_output = UUID(b)
-        b = UUID_output.decode()
+        UUID_output = UUID(self.byte_array)
+        UUID_output.decode()
         self.uuid = UUID_output
-        return b
-
 

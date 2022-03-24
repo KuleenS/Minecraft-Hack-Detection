@@ -6,6 +6,5 @@ class UUID:
         self.uuid = None
     
     def decode(self):
-        decoded_uuid = uuid.UUID(bytes=self.byte_array[:16])
+        decoded_uuid = uuid.UUID(bytes=self.byte_array.read(16))
         self.uuid = decoded_uuid
-        return self.byte_array[16:]

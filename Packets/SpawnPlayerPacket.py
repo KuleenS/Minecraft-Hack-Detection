@@ -21,12 +21,10 @@ class SpawnPlayerPacket(Packet):
         self.metadata = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
-        decoded_uuid = uuid.UUID(bytes=b[:16])
-        b = b[16:]
-        x, y, z, yaw, pitch, current_item = struct.unpack('>iiibbh', b[:16])
-        b = b[16:]
+        decoded_uuid = uuid.UUID(bytes=self.byte_array.read(16))
+        x, y, z, yaw, pitch, current_item = struct.unpack('>iiibbh', self.byte_array.read(16))
         self.uuid = decoded_uuid
         self.x = x/32.0
         self.y = y/32.0
@@ -36,15 +34,14 @@ class SpawnPlayerPacket(Packet):
         self.current_item = current_item
         metadata_entries = []
         while True:
-            index_var = struct.unpack(">B", b[:1])[0]
+            index_var = struct.unpack(">B", self.byte_array.read(1))[0]
             if index_var == 127:
                 break
             else:
-                b = b[1:]
                 index = index_var & 0x1F
                 type = index_var >> 5
-                metadata_entry = Metadata(index, type, b)
-                b = metadata_entry.decode()
+                metadata_entry = Metadata(index, type, self.byte_array)
+                metadata_entry.decode()
                 metadata_entries.append(metadata_entry)
         self.metadata = metadata_entries
 

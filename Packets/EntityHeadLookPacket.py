@@ -10,9 +10,9 @@ class EntityHeadLookPacket(Packet):
         self.head_yaw = None
 
     def decode(self):
-        eid, b = read_var_int(self.byte_array)
+        eid = read_var_int(self.byte_array)
         self.entity_id = eid
-        head_yaw = struct.unpack('>b', b)[0]
+        head_yaw = struct.unpack('>b', self.byte_array.read(1))[0]
         self.head_yaw = head_yaw/256.0
 
     def get(self):
