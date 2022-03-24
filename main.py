@@ -9,6 +9,7 @@ from utils.consts import ALL_PACKET_TYPES, TIME_SERIES_PACKETS
 from utils.interpolate import interpolate
 from utils.decode import read_var_int
 
+
 def main(args):
     packets = []
     all_parsed = []
@@ -44,7 +45,8 @@ def main(args):
     biggest_timestamp = max([x['timestamp'] for x in final])
     smallest_timestamp = min([x['timestamp'] for x in final])
     for player in entity_ids:
-        packets_for_player = [x for x in final if ('entity_id' in x) and (x['entity_id'] == player)]
+        packets_for_player = [x for x in final if (
+            'entity_id' in x) and (x['entity_id'] == player)]
         player_dict = {x: [] for x in ALL_PACKET_TYPES}
         for packet in packets_for_player:
             packet_type = packet['packet_type']
@@ -57,13 +59,16 @@ def main(args):
             packets_associated_with_time_series = decode_config[1]
             for key in packets_associated_with_time_series:
                 packets_to_process.extend(player_dict.get(key))
-            packets_to_process = sorted(packets_to_process, key = lambda i: i['timestamp'])
-            output_time_series = function_associated_with_time_series(packets_to_process)
-            time_series_for_player[time_series] = interpolate(output_time_series, smallest_timestamp, biggest_timestamp)
+            packets_to_process = sorted(
+                packets_to_process, key=lambda i: i['timestamp'])
+            output_time_series = function_associated_with_time_series(
+                packets_to_process)
+            time_series_for_player[time_series] = interpolate(
+                output_time_series, smallest_timestamp, biggest_timestamp)
         player_time_series[player] = time_series_for_player
 
-        
-        
+    with open('test.json', 'w') as f:
+        json.dump(final, f)
 
 
 if __name__ == "__main__":

@@ -24,7 +24,8 @@ class SpawnPlayerPacket(Packet):
         eid = read_var_int(self.byte_array)
         self.entity_id = eid
         decoded_uuid = uuid.UUID(bytes=self.byte_array.read(16))
-        x, y, z, yaw, pitch, current_item = struct.unpack('>iiibbh', self.byte_array.read(16))
+        x, y, z, yaw, pitch, current_item = struct.unpack(
+            '>iiibbh', self.byte_array.read(16))
         self.uuid = decoded_uuid
         self.x = x/32.0
         self.y = y/32.0

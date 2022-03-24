@@ -32,14 +32,14 @@ class EntityMetadataPacket(Packet):
     def get(self):
         return {
             "entity_id": self.entity_id,
-            "packet_type" : "entity_metadata",
+            "packet_type": "entity_metadata",
             "timestamp": self.timestamp,
-            "metadata":[{
+            "metadata": [{
                 'packet_type': f'meta_{m.type}',
                 'index': m.index,
                 'data': m.data,
                 'type': m.type
-                } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
+            } for m in self.metadata if m.type not in self.METADATA_TYPE_FILTER_OUT]
         }
 
     def __repr__(self) -> str:
